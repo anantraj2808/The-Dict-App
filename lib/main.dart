@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: TextFormField(
                     onChanged: (String text){
                       if (_debounce?.isActive ?? false) _debounce.cancel();
-                      _debounce = Timer(const Duration(milliseconds: 100), () {
+                      _debounce = Timer(const Duration(milliseconds: 1000), () {
                         _search();
                       });
                     },
@@ -116,8 +116,19 @@ class _MyHomePageState extends State<MyHomePage> {
             }
 
             if (snapshot.data == "Waiting") {
+              if (_controller.text.length<2){
+                return Center(
+                  child: Text("Please be a bit more specific"),
+                );
+              }
               return Center(
                 child: CircularProgressIndicator(),
+              );
+            }
+
+            if (_controller.text.length<2){
+              return Center(
+                child: Text("Please be a bit more specific"),
               );
             }
 
